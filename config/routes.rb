@@ -4,7 +4,7 @@ GuhRails::Application.routes.draw do
     namespace :v1 do
 
       resources :devices do
-        get 'discover', on: :collection
+        post 'discover', on: :collection
         post 'confirm_pairing', on: :collection
 
         resources :actions do
