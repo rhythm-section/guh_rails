@@ -43,7 +43,7 @@ class Api::V1::DevicesController < ApplicationController
   end
 
   def discover
-    @discovered_devices = Guh::Device.discover(params[:device_class_id], params[:discovery_params])
+    @discovered_devices = Guh::Device.discover(params[:device_class_id], JSON.parse(params[:discovery_params]))
 
     respond_to do |format|
       format.json { render json: @discovered_devices }
