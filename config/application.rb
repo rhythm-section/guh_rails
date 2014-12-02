@@ -32,5 +32,14 @@ module GuhRails
       generate.assets false
       generate.view_specs false
     end
+
+    # This will only include the WebSocket module if
+    # the app is being run inside of Thin. Additional
+    # evented web servers might be added in the future.
+    if defined? Thin
+      config.after_initialize do
+        include WebsocketModule
+      end
+    end
   end
 end
