@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'guh'
+gem 'eventmachine'
+gem 'em-websocket'
+gem 'thin'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
