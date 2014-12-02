@@ -12,4 +12,12 @@ class Api::V1::DeviceClassesController < ApplicationController
     end
   end
 
+  def show
+    @device_class = Guh::DeviceClass.find(params[:id])
+
+    respond_to do |format|
+      format.json { render json: @device_class }
+    end
+  end
+
 end
