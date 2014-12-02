@@ -1,16 +1,19 @@
 class Api::V1::RulesController < ApplicationController
-  
+
   def index
-    @rule_array = [
-      {id: 1, rule: "if this then that"},
-      {id: 2, rule: "if this then that"},
-      {id: 3, rule: "if this then that"},
-      {id: 4, rule: "if this then that"}
-    ]
-    
+    @rules = Guh::Rule.all
+
     respond_to do |format|
-      format.json { render json: @rule_array }
+      format.json { render json: @rules }
     end
   end
-  
+
+  def create
+    @rule = Guh::Rule.add(params[:rule])
+
+    respond_to do |format|
+      format.json { render json: @rule }
+    end
+  end
+
 end
