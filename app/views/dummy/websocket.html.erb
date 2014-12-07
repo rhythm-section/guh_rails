@@ -1,0 +1,71 @@
+<h1>Devices</h1>
+
+<table id="devices" border=1></table>
+
+<script type="text/javascript">
+  $.ajax("http://localhost:3000/api/v1/devices.json", {
+    method: 'GET',
+    success: function(data, status, jqXHR) {
+      data.forEach(function(el) {
+        var tr = $('<tr>');
+        tr.attr('data-id', el.id);
+        var name = $('<td>');
+        name.html(el.name);
+        tr.append(name);
+
+        var data_td = $('<td>');
+        tr.append(data_td);
+
+        var data_table = $('<table border=1>');
+        data_td.append(data_table);
+        var data_head_tr = $('<tr>');
+        data_table.append(data_head_tr);
+        var data_data_tr = $('<tr>');
+        data_table.append(data_data_tr);
+
+        var device_class_url = "http://localhost:3000/api/v1/device_classes/" + el.deviceClassId + ".json";
+
+        $.get(device_class_url, {async: false}).done(function(data){
+          data.stateTypes.forEach(function(stateType){
+            var th = $('<th>');
+            th.html(stateType.name);
+            data_head_tr.append(th);
+
+            var td = $('<td>');
+            td.attr('data-stateTypeId', stateType.id);
+
+            $.get("http://localhost:3000/api/v1/devices/" + el.id + "/states/" + stateType.id + ".json", {async: false}).done(function(data){
+              td.html(data.value);
+            });
+
+            data_data_tr.append(td);
+          })
+        })
+
+        $('#devices').append(tr);
+
+      });
+    }
+  })
+</script>
+
+<script type="text/javascript">
+  var ws = new WebSocket("ws://127.0.0.1:3001/");
+
+  ws.onopen = function() {
+    console.log("opened");
+  };
+  ws.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+
+    if (data.notification == 'Devices.StateChanged') {
+      var device = $('#devices').find('tr[data-id="' + data.params.deviceId + '"]');
+
+      var cell = device.find('td[data-statetypeid="' + data.params.stateTypeId + '"]');
+      cell.html(data.params.value);
+    }
+  };
+  ws.onclose = function() {
+    console.log("closed");
+  };
+</script>

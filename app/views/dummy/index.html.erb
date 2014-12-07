@@ -115,7 +115,7 @@
 <% @devices.each do |d| %>
   <strong><%= d['name'] %></strong>
 
-  <% Guh::ActionType.all(d['deviceClassId']).each do |action| %>
+  <% Guh::Action.all(d['deviceClassId']).each do |action| %>
 
     <%= form_tag execute_api_v1_device_action_path(d['id'], action['id'], format: 'json'), class: 'action_form' %>
 
