@@ -3,7 +3,7 @@ class Api::V1::ActionsController < ApplicationController
   before_filter :find_device
 
   def index
-    response = Guh::ActionType.all(@device['deviceClassId'])
+    response = Guh::Action.all(@device['deviceClassId'])
 
     respond_to do |format|
       format.json { render json: response }

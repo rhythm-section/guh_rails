@@ -36,7 +36,7 @@ GEM
       http_parser.rb (~> 0.6.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
-    guh (0.0.11)
+    guh (0.0.12)
       eventmachine
       json (~> 1.8)
     hike (1.2.3)

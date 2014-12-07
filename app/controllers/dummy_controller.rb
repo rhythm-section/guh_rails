@@ -7,7 +7,7 @@ class DummyController < ApplicationController
     end
 
     @devices = @devices.select do |device|
-      Guh::ActionType.all(device['deviceClassId']).length > 0
+      Guh::Action.all(device['deviceClassId']).length > 0
     end
   end
 
