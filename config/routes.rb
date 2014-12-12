@@ -9,7 +9,7 @@ GuhRails::Application.routes.draw do
       resources :devices do
 
         # Devices.GetDiscoveredDevices
-        post 'discover', on: :collection
+        get 'discover', on: :collection
 
         # TODO Devices.PairDevice
 
@@ -61,6 +61,7 @@ GuhRails::Application.routes.draw do
 
   # JSONRPC.SetNotificationStatus => via websocket
 
+  get 'websocket' => 'dummy#websocket'
   root to: 'dummy#index'
 
 end
